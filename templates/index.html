@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        #result { margin-top: 20px; font-size: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Sentiment Analysis System</h1>
+    <textarea id="text-input" rows="4" cols="50" placeholder="Enter text here..."></textarea><br>
+    <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+    <div id="result"></div>
+    
+    <script>
+        function analyzeSentiment() {
+            var text = $("#text-input").val();
+            if (text.trim() === "") {
+                alert("Please enter some text.");
+                return;
+            }
+            
+            $.ajax({
+                url: "/analyze",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ text: text }),
+                success: function(response) {
+                    $("#result").html(`Sentiment: <span style='color: ${getColor(response.sentiment)}'>${response.sentiment}</span>`);
+                },
+                error: function() {
+                    alert("Error analyzing sentiment.");
+                }
+            });
+        }
+        
+        function getColor(sentiment) {
+            if (sentiment === "Positive") return "green";
+            if (sentiment === "Negative") return "red";
+            return "gray";
+        }
+    </script>
+</body>
+</html>
