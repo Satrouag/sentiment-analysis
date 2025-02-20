@@ -30,7 +30,12 @@
                 contentType: "application/json",
                 data: JSON.stringify({ text: text }),
                 success: function(response) {
-                    $("#result").html(`Sentiment: <span style='color: ${getColor(response.sentiment)}'>${response.sentiment}</span> `);
+                    $("#result").html(
+                        `
+                        Sentiment: <span style='color: ${getColor(response.sentiment)}'>${response.sentiment}</span><br>
+                        Positive Probability: <span style='color: ${getColor("Positive")}'>${response.positive_probability}%</span><br>
+                        Negative Probability: <span style='color: ${getColor("Negative")}'>${response.negative_probability}%</span><br>
+                        `);
                 },
                 error: function() {
                     alert("Error analyzing sentiment.");
@@ -48,6 +53,3 @@
     <!-- <script src="../scripts/imdb.js"></script> -->
 </body>
 </html>
-
-<!-- this is adding prob confidence of the result -->
-<!-- (Confidence: ${(response.probability * 100).toFixed(2)}%) -->
