@@ -3,7 +3,7 @@ import joblib
 import numpy as np
 
 # Load the trained model
-model = joblib.load("sentiment_model.pkl")
+model = joblib.load("final_sentiment_model.pkl")
 
 # Initialize Flask app
 app = Flask(__name__)
